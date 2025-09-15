@@ -1,0 +1,237 @@
+/* ========== Reset ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== Base ========== */
+body {
+  background: linear-gradient(135deg, #212130, #39304A, #5C5C5C);
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Heading */
+h1 {
+  font-size: 3rem;
+  color: #E0E0FF;
+  text-align: center;
+  text-shadow:
+    0 0 0.5rem #6A6A8A,
+    0 0 1rem #8C8CFF,
+    0 0 2rem #2A2A3D;
+  margin-bottom: 2rem;
+}
+
+/* ========== Layout ========== */
+.container {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column; /* stack board then reset */
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* spacing between board and reset */
+}
+
+.game {
+  height: 60vmin;
+  width: 60vmin;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5vmin;
+}
+
+/* ========== Cells ========== */
+.Box {
+  height: 18vmin;
+  width: 18vmin;
+  border-radius: 1rem;
+  border: none;
+  background: linear-gradient(135deg, #2A2A3D, #3F3F5A);
+  box-shadow: 0 0 0.5rem rgba(33, 33, 48, 0.4), 0 0 1rem rgba(0, 0, 0, 0.6);
+  font-size: 5rem;
+  color: #E0E0FF;
+  text-shadow:
+    0 0 0.3rem #6A6A8A,
+    0 0 0.6rem #8C8CFF,
+    0 0 1rem #2A2A3D;
+  font-family: 'Orbitron', sans-serif;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.Box:hover {
+  box-shadow:
+    0 0 1rem #c2c2d4,
+    0 0 2rem #6A6A8A;
+  transform: scale(1.05);
+}
+
+/* ========== Status Banner ========== */
+#status {
+  margin: 0 auto 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #E0E0FF;
+  text-shadow:
+    0 0 0.5rem #6A6A8A,
+    0 0 1rem #8C8CFF,
+    0 0 2rem #2A2A3D;
+  opacity: 0;
+  transform: scale(0.96) translateY(-6px);
+  transition: opacity 300ms ease, transform 300ms ease;
+  font-size: clamp(1.2rem, 3.5vmin, 2rem);
+}
+
+/* Show banner when a winner exists */
+.won #status {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Victory glow on the board */
+.won .game {
+  box-shadow:
+    0 0 1rem rgba(194, 194, 212, 0.5),
+    0 0 2rem rgba(140, 140, 255, 0.4),
+    0 0 3rem rgba(42, 42, 61, 0.6);
+  border-radius: 1.2rem;
+  transition: box-shadow 400ms ease;
+}
+
+/* Winning cells pulse */
+.Box.win {
+  animation: winPulse 900ms ease-in-out 0s 3;
+}
+
+@keyframes winPulse {
+  0%   { transform: scale(1); filter: brightness(1); }
+  40%  { transform: scale(1.06); filter: brightness(1.2); }
+  70%  { transform: scale(1.02); filter: brightness(1.08); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+/* ========== Reset Button ========== */
+#reset {
+  appearance: none;
+  border: none;
+  border-radius: 0.9rem;
+  padding: 0.7rem 1.4rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #E0E0FF;
+  background: linear-gradient(135deg, #2A2A3D, #3F3F5A);
+  box-shadow:
+    0 0 0.4rem rgba(33, 33, 48, 0.35),
+    0 0 0.8rem rgba(0, 0, 0, 0.5),
+    inset 0 0 0.2rem rgba(140, 140, 255, 0.2);
+  text-shadow:
+    0 0 0.3rem #6A6A8A,
+    0 0 0.6rem #8C8CFF,
+    0 0 1rem #2A2A3D;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  align-self: center;          /* centers within .container column */
+  margin-top: 0.2rem;          /* small gap below board */
+  min-width: 9rem;
+}
+
+#reset:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 0 0.8rem #c2c2d4,
+    0 0 1.6rem #6A6A8A,
+    inset 0 0 0.2rem rgba(140, 140, 255, 0.35);
+}
+
+#reset:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+  box-shadow:
+    0 0 0.5rem rgba(33, 33, 48, 0.4),
+    0 0 1rem rgba(0, 0, 0, 0.6),
+    inset 0 0 0.2rem rgba(140, 140, 255, 0.25);
+}
+
+/* When game is won, give the reset a gentle highlight */
+.won #reset {
+  box-shadow:
+    0 0 0.9rem rgba(194, 194, 212, 0.55),
+    0 0 1.8rem rgba(140, 140, 255, 0.45),
+    inset 0 0 0.2rem rgba(140, 140, 255, 0.35);
+}
+
+/* ========== Confetti Layer (Pure CSS) ========== */
+.confetti {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+/* Reveal confetti when won */
+.won .confetti {
+  opacity: 1;
+}
+
+/* Confetti pieces */
+.confetti i {
+  position: absolute;
+  top: -10vh;
+  width: 0.8vmin;
+  height: 3.2vmin;
+  border-radius: 0.3vmin;
+  opacity: 0.95;
+  transform: translateY(-120%) rotate(0deg);
+  animation: fall linear forwards, sway 900ms ease-in-out infinite alternate;
+}
+
+/* Colors */
+.confetti i.c1 { background: #ff6b6b; }
+.confetti i.c2 { background: #ffd93d; }
+.confetti i.c3 { background: #6bcb77; }
+.confetti i.c4 { background: #4d96ff; }
+.confetti i.c5 { background: #b980ff; }
+.confetti i.c6 { background: #ff9f1c; }
+
+/* Falling animation */
+@keyframes fall {
+  0%   { transform: translateY(-120%) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translateY(50vh) rotate(180deg); }
+  100% { transform: translateY(105vh) rotate(360deg); opacity: 0.95; }
+}
+
+/* Gentle sway */
+@keyframes sway {
+  from { transform: translateY(var(--ty,0)) translateX(-12px) rotate(0deg); }
+  to   { transform: translateY(var(--ty,0)) translateX(12px) rotate(6deg); }
+}
+
+/* Positions across the width and varied timings */
+.confetti i:nth-child(1)  { left: 8%;  animation-duration: 1800ms; animation-delay: 0ms; }
+.confetti i:nth-child(2)  { left: 16%; animation-duration: 2100ms; animation-delay: 100ms; }
+.confetti i:nth-child(3)  { left: 24%; animation-duration: 1900ms; animation-delay: 200ms; }
+.confetti i:nth-child(4)  { left: 32%; animation-duration: 2200ms; animation-delay: 300ms; }
+.confetti i:nth-child(5)  { left: 40%; animation-duration: 2000ms; animation-delay: 400ms; }
+.confetti i:nth-child(6)  { left: 48%; animation-duration: 2300ms; animation-delay: 500ms; }
+.confetti i:nth-child(7)  { left: 56%; animation-duration: 2100ms; animation-delay: 600ms; }
+.confetti i:nth-child(8)  { left: 64%; animation-duration: 2400ms; animation-delay: 700ms; }
+.confetti i:nth-child(9)  { left: 72%; animation-duration: 2000ms; animation-delay: 800ms; }
+.confetti i:nth-child(10) { left: 80%; animation-duration: 2250ms; animation-delay: 900ms; }
+.confetti i:nth-child(11) { left: 12%; animation-duration: 2150ms; animation-delay: 150ms; }
+.confetti i:nth-child(12) { left: 28%; animation-duration: 2350ms; animation-delay: 250ms; }
+.confetti i:nth-child(13) { left: 44%; animation-duration: 2050ms; animation-delay: 350ms; }
+.confetti i:nth-child(14) { left: 60%; animation-duration: 2450ms; animation-delay: 450ms; }
+.confetti i:nth-child(15) { left: 76%; animation-duration: 1950ms; animation-delay: 550ms; }
+
+/* Extra variety */
+.confetti i:nth-child(3n) { width: 1vmin;  height: 3.6vmin; }
+.confetti i:nth-child(4n) { width: 0.6vmin; height: 2.8vmin; border-radius: 0.2vmin; }
